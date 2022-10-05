@@ -149,7 +149,7 @@ const Substrates = ({substrates, isFilter}) => {
         </div>
         <hr/>
         <h6 className='block tracking-wide text-gray-700 font-bold align-middle mx-auto my-2'>
-          Surface Area Range (mm&sup2;)
+          Specific Heat Range (TODO:UNIT?)
         </h6>
         <div className='flex flex-row justify-center my-2'>
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
