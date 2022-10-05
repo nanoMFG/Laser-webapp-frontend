@@ -1,35 +1,35 @@
 import React, {useEffect, useState} from 'react'
 import Substrate from '../components/Substrate'
 import {defaultPrecision} from "../settings";
-import {catalystOptions} from "../settings";
+import {materialOptions} from "../settings";
 
 const Substrates = ({substrates, isFilter}) => {
-  const [catalyst, setCatalyst] = useState("All")
-  const [thicknessMin, setThicknessMin] = useState(0)
-  const [thicknessMax, setThicknessMax] = useState(9999)
-  const [diameterMin, setDiameterMin] = useState(0)
-  const [diameterMax, setDiameterMax] = useState(9999)
-  const [lengthMin, setLengthMin] = useState(0)
-  const [lengthMax, setLengthMax] = useState(9999)
-  const [surfaceAreaMin, setSurfaceAreaMin] = useState(0)
-  const [surfaceAreaMax, setSurfaceAreaMax] = useState(9999)
+  const [material, setMaterial] = useState("All")
+  const [specificMeltingEnthalpyMin, setSpecificMeltingEnthalpyMin] = useState(0)
+  const [specificMeltingEnthalpyMax, setSpecificMeltingEnthalpyMax] = useState(9999)
+  const [liquidSurfaceAbsorptivityMin, setLiquidSurfaceAbsorptivityMin] = useState(0)
+  const [liquidSurfaceAbsorptivityMax, setLiquidSurfaceAbsorptivityMax] = useState(9999)
+  const [thermalConductivityMin, setThermalConductivityMin] = useState(0)
+  const [thermalConductivityMax, setThermalConductivityMax] = useState(9999)
+  const [specificHeatMin, setSpecificHeatMin] = useState(0)
+  const [specificHeatMax, setSpecificHeatMax] = useState(9999)
   const [filteredSubstrates, setFilteredSubstrates] = useState(substrates)
 
   useEffect(() => {
     const filtered = substrates.filter((substrate) => {
-      const catal = substrate.catalyst.value
-      const thickness = substrate.thickness.value
-      const diameter = substrate.diameter.value
-      const length = substrate.length.value
-      const surfaceArea = substrate.surface_area.value
-      return (catalyst === 'All' || catal === catalyst)
-        && (thickness === null || (thicknessMin <= thickness && thickness <= thicknessMax))
-        && (diameter === null || (diameterMin <= diameter && diameter <= diameterMax))
-        && (length === null || (lengthMin <= length && length <= lengthMax))
-        && (surfaceArea === null || (surfaceAreaMin <= surfaceArea && surfaceArea <= surfaceAreaMax))
+      const mater = substrate.material.value
+      const specificMeltingEnthalpy = substrate.specificMeltingEnthalpy.value
+      const liquidSurfaceAbsorptivity = substrate.liquidSurfaceAbsorptivity.value
+      const thermalConductivity = substrate.thermalConductivity.value
+      const specificHeat = substrate.specificHeat.value
+      return (material === 'All' || mater === material)
+        && (specificMeltingEnthalpy === null || (specificMeltingEnthalpyMin <= specificMeltingEnthalpy && specificMeltingEnthalpy <= specificMeltingEnthalpyMax))
+        && (liquidSurfaceAbsorptivity === null || (liquidSurfaceAbsorptivityMin <= liquidSurfaceAbsorptivity && liquidSurfaceAbsorptivity <= liquidSurfaceAbsorptivityMax))
+        && (thermalConductivity === null || (thermalConductivityMin <= thermalConductivity && thermalConductivity <= thermalConductivityMax))
+        && (specificHeat === null || (specificHeatMin <= specificHeat && specificHeat <= specificHeatMax))
     })
     setFilteredSubstrates(filtered)
-  }, [substrates, catalyst, thicknessMin, thicknessMax, diameterMin, diameterMax, lengthMin, lengthMax, surfaceAreaMin, surfaceAreaMax])
+  }, [substrates, material, specificMeltingEnthalpyMin, specificMeltingEnthalpyMax, liquidSurfaceAbsorptivityMin, liquidSurfaceAbsorptivityMax, thermalConductivityMin, thermalConductivityMax, specificHeatMin, specificHeatMax])
   if (!substrates) {
     return null
   }
@@ -39,20 +39,20 @@ const Substrates = ({substrates, isFilter}) => {
     scrollbarClass += ' border p-3 h-screen-3/4 overflow-y-scroll'
     searchBar =
       <div className='flex flex-col border rounded mb-2 p-2'>
-        <h6 className='block tracking-wide text-gray-700 font-bold align-middle mx-auto'> Catalyst</h6>
+        <h6 className='block tracking-wide text-gray-700 font-bold align-middle mx-auto'> Material</h6>
         <div className='flex flex-row justify-center my-2'>
           <div className="w-full md:w-2/3 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="catalyst">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="material">
               Option
             </label>
             <div className="relative">
               <select
                 className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="catalyst"
-                onChange={e => setCatalyst(e.target.value)}>
+                id="material"
+                onChange={e => setMaterial(e.target.value)}>
                 <option>All</option>
                 {
-                  catalystOptions.map((option, i) =>
+                  materialOptions.map((option, i) =>
                     <option key={i}>{option}</option>
                   )
                 }
@@ -67,83 +67,83 @@ const Substrates = ({substrates, isFilter}) => {
         </div>
         <hr/>
         <h6 className='block tracking-wide text-gray-700 font-bold align-middle mx-auto'>
-          Thickness Range (um&sup2;)
+          Specific Melting Enthalpy Range (TODO:UNIT?)
         </h6>
         <div className='flex flex-row justify-center my-2'>
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                   htmlFor="thickness-min">
+                   htmlFor="specific-melting-enthalpy-min">
               min
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="thickness-min" type="number" step={defaultPrecision} value={thicknessMin}
-              onChange={(e) => setThicknessMin(e.target.value)}
+              id="specific-melting-enthalpy-min" type="number" step={defaultPrecision} value={specificMeltingEnthalpyMin}
+              onChange={(e) => setSpecificMeltingEnthalpyMin(e.target.value)}
             />
           </div>
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                   htmlFor="thickness-max">
+                   htmlFor="specific-melting-enthalpy-max">
               max
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="thickness-max" type="number" step={defaultPrecision} value={thicknessMax} min={thicknessMin}
-              onChange={(e) => setThicknessMax(e.target.value)}
+              id="specific-melting-enthalpy-max" type="number" step={defaultPrecision} value={specificMeltingEnthalpyMax} min={specificMeltingEnthalpyMin}
+              onChange={(e) => setSpecificMeltingEnthalpyMax(e.target.value)}
             />
           </div>
         </div>
         <hr/>
         <h6 className='block tracking-wide text-gray-700 font-bold align-middle mx-auto my-2'>
-          Diameter Range (mm)
+          Liquid Surface Absorptivity Range (TODO:UNIT?)
         </h6>
         <div className='flex flex-row justify-center my-2'>
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                   htmlFor="diameter-min">
+                   htmlFor="liquid-surface-absorptivity-min">
               min
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="diameter-min" type="number" step={defaultPrecision} value={diameterMin}
-              onChange={(e) => setDiameterMin(e.target.value)}
+              id="liquid-surface-absorptivity-min" type="number" step={defaultPrecision} value={liquidSurfaceAbsorptivityMin}
+              onChange={(e) => setLiquidSurfaceAbsorptivityMin(e.target.value)}
             />
           </div>
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                   htmlFor="diameter-max">
+                   htmlFor="liquid-surface-absorptivity-max">
               max
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="diameter-max" type="number" step={defaultPrecision} value={diameterMax} min={diameterMin}
-              onChange={(e) => setDiameterMax(e.target.value)}
+              id="liquid-surface-absorptivity-max" type="number" step={defaultPrecision} value={liquidSurfaceAbsorptivityMax} min={liquidSurfaceAbsorptivityMin}
+              onChange={(e) => setLiquidSurfaceAbsorptivityMax(e.target.value)}
             />
           </div>
         </div>
         <hr/>
         <h6 className='block tracking-wide text-gray-700 font-bold align-middle mx-auto my-2'>
-          Length Range (mm)
+          Thermal Conductivity Range (TODO:UNIT?)
         </h6>
         <div className='flex flex-row justify-center my-2'>
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="length-min">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="thermal-conductivity-min">
               min
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="length-min" type="number" step={defaultPrecision} value={lengthMin}
-              onChange={(e) => setLengthMin(e.target.value)}
+              id="thermal-conductivity-min" type="number" step={defaultPrecision} value={thermalConductivityMin}
+              onChange={(e) => setThermalConductivityMin(e.target.value)}
             />
           </div>
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
-            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="length-max">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" htmlFor="thermal-conductivity-max">
               max
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="length-max" type="number" step={defaultPrecision} value={lengthMax} min={lengthMin}
-              onChange={(e) => setLengthMax(e.target.value)}
+              id="thermal-conductivity-max" type="number" step={defaultPrecision} value={thermalConductivityMax} min={thermalConductivityMin}
+              onChange={(e) => setThermalConductivityMax(e.target.value)}
             />
           </div>
         </div>
@@ -154,24 +154,24 @@ const Substrates = ({substrates, isFilter}) => {
         <div className='flex flex-row justify-center my-2'>
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                   htmlFor="surface-area-min">
+                   htmlFor="specific-heat-min">
               min
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="surface-area-min" type="number" step={defaultPrecision} value={surfaceAreaMin}
-              onChange={(e) => setSurfaceAreaMin(e.target.value)}
+              id="specific-heat-min" type="number" step={defaultPrecision} value={specificHeatMin}
+              onChange={(e) => setSpecificHeatMin(e.target.value)}
             />
           </div>
           <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                   htmlFor="surface-area-max">
+                   htmlFor="specific-heat-max">
               max
             </label>
             <input
               className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              id="surface-area-max" type="number" step={defaultPrecision} value={surfaceAreaMax} min={surfaceAreaMin}
-              onChange={(e) => setSurfaceAreaMax(e.target.value)}
+              id="specific-heat-max" type="number" step={defaultPrecision} value={specificHeatMax} min={specificHeatMin}
+              onChange={(e) => setSpecificHeatMax(e.target.value)}
             />
           </div>
         </div>
@@ -186,11 +186,11 @@ const Substrates = ({substrates, isFilter}) => {
           <Substrate
             key={substrate.id}
             id={substrate.id}
-            catalyst={substrate.catalyst.value}
-            thickness={substrate.thickness.value}
-            diameter={substrate.diameter.value}
-            length={substrate.length.value}
-            surfaceArea={substrate.surface_area.value}
+            material={substrate.material.value}
+            specificMeltingEnthalpy={substrate.specificMeltingEnthalpy.value}
+            liquidSurfaceAbsorptivity={substrate.liquidSurfaceAbsorptivity.value}
+            thermalConductivity={substrate.thermalConductivity.value}
+            specificHeat={substrate.specificHeat.value}
             isAddedToFilter={substrate.isAddedToFilter}
             isFilter={isFilter}
           />
